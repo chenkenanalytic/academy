@@ -1,0 +1,209 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>自由學院 | AI . FREE Academy</title>
+
+  <!-- Bootstrap 5.3.3 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="shortcut icon" type="image/x-icon" href="/static/bootstrap/assets/img/favicon.ico">
+  <!-- Google Fonts（台灣思源黑體）-->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-color: #3fb0e6;          /* rgb(63,176,230) */
+      --accent-color : #8dcd49;          /* rgb(141,205,73) */
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; }
+
+    /* ---------- Navbar ---------- */
+    .navbar-brand { color: var(--primary-color) !important; font-weight: 800; }
+    .navbar-nav .nav-link.active { color: var(--primary-color) !important; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
+                  url('/static/academy/img/hero.png') center/cover no-repeat;
+      min-height: 70vh;
+    }
+    .hero h1 { font-size: 3rem; }
+
+    /* ---------- Cards ---------- */
+    .course-card { transition: transform .3s, box-shadow .3s; }
+    .course-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(0,0,0,.15); }
+
+    /* ---------- Category icon ---------- */
+    .category-icon {
+      width:64px; height:64px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background: var(--accent-color); color:#fff; font-size:1.5rem;
+      margin:0 auto .5rem;
+    }
+
+    /* ---------- Brand Buttons ---------- */
+    .btn-primary {
+      --bs-btn-bg: var(--primary-color);
+      --bs-btn-border-color: var(--primary-color);
+      --bs-btn-hover-bg: #37a2d5;
+      --bs-btn-hover-border-color: #37a2d5;
+      --bs-btn-active-bg: #3293c1;
+      --bs-btn-active-border-color: #3293c1;
+    }
+
+    /* ---------- Footer ---------- */
+    footer { background:#212529; color:#adb5bd; }
+    footer a { color:#adb5bd; text-decoration:none; }
+    footer a:hover { color:#fff; }
+  </style>
+  <style>
+    :root {
+      --primary-color: #3fb0e6;
+      --accent-color: #8dcd49;
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; }
+
+    .navbar-brand {
+      color: var(--primary-color) !important;
+      font-weight: 800;
+    }
+    .nav-link.active {
+      color: var(--primary-color) !important;
+    }
+
+    .course-card {
+      transition: transform .3s, box-shadow .3s;
+    }
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.1);
+    }
+
+    .btn-primary {
+      --bs-btn-bg: var(--primary-color);
+      --bs-btn-border-color: var(--primary-color);
+      --bs-btn-hover-bg: #36a3d3;
+      --bs-btn-hover-border-color: #36a3d3;
+      --bs-btn-active-bg: #2d96c6;
+      --bs-btn-active-border-color: #2d96c6;
+    }
+
+    .btn-secondary {
+      --bs-btn-bg: var(--accent-color);
+      --bs-btn-border-color: var(--accent-color);
+      --bs-btn-hover-bg: #7cbc3f;
+      --bs-btn-hover-border-color: #7cbc3f;
+      --bs-btn-active-bg: #6faf38;
+      --bs-btn-active-border-color: #6faf38;
+    }
+
+    header.bg-primary {
+      background-color: var(--primary-color) !important;
+    }
+
+    footer.bg-dark {
+      background-color: #212529 !important;
+      color: #adb5bd;
+    }
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #fff;
+    }
+
+    .filter-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1050;
+    }
+  </style>
+  <style>
+    :root {
+      --primary-color: #3fb0e6;
+      --accent-color : #8dcd49;
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; min-height:100vh }
+    .navbar-brand { color: var(--primary-color) !important; font-weight: 800; }
+    .btn-primary {
+      --bs-btn-bg: var(--primary-color);
+      --bs-btn-border-color: var(--primary-color);
+      --bs-btn-hover-bg: #36a3d3;
+    }
+    .section-title {
+      border-left: 5px solid var(--accent-color);
+      padding-left: .75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .hero-img {
+      max-height: 480px;
+      object-fit: cover;
+      width: 100%;
+      border-radius: .5rem;
+    }
+    footer {
+      background: #212529;
+      color: #adb5bd;
+    }
+    footer a { color: #adb5bd; text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+
+  <style>
+    :root {
+      --primary-color: #3fb0e6;
+      --accent-color : #8dcd49;
+    }
+    body { font-family: 'Noto Sans TC', sans-serif; }
+    .navbar-brand { color: var(--primary-color) !important; font-weight: 800; }
+    .btn-primary {
+      --bs-btn-bg: var(--primary-color);
+      --bs-btn-border-color: var(--primary-color);
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: .5rem;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .course-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    .unit-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #444;
+    }
+    .badge-complete {
+      background-color: var(--accent-color);
+    }
+    .page-container { /* 這個是你的最外層容器，這裡用 body 作為範例 */
+      display: flex;
+      flex-direction: column; /* 將子元素垂直堆疊 */
+      min-height: 100vh; /* 確保容器至少佔滿整個視窗高度 */
+    }
+    .container {
+      flex-grow: 1;
+    }
+  </style>
+  {% if messages %}
+    <script>
+      {% for msg in messages %}
+      alert('{{ msg }}');
+      {% endfor %}
+    </script>
+    {% endif %}
+</head>

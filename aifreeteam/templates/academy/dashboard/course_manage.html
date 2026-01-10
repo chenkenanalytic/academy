@@ -1,0 +1,80 @@
+{% extends 'academy/dashboard/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">課程內容管理</h2>
+        <h5 class="text-muted">{{ course.title }}</h5>
+    </div>
+    <div>
+        <a href="{% url 'dashboard_chapter_create' course.slug %}" class="btn btn-success me-2">
+            <i class="fa-solid fa-folder-plus"></i> 新增章節
+        </a>
+        <a href="{% url 'dashboard_home' %}" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-arrow-left"></i> 返回列表
+        </a>
+    </div>
+</div>
+
+<div class="accordion" id="chaptersAccordion">
+    {% for chapter in chapters %}
+    <div class="accordion-item mb-3 border shadow-sm rounded overflow-hidden">
+        <h2 class="accordion-header" id="heading{{ chapter.id }}">
+            <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapse{{ chapter.id }}" aria-expanded="true"
+                aria-controls="collapse{{ chapter.id }}">
+                <span class="fw-bold me-3">第 {{ chapter.order }} 章：{{ chapter.title }}</span>
+                <span class="badge bg-secondary rounded-pill">{{ chapter.lessons.count }} 單元</span>
+            </button>
+        </h2>
+        <div id="collapse{{ chapter.id }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+            aria-labelledby="heading{{ chapter.id }}" data-bs-parent="#chaptersAccordion">
+            <div class="accordion-body bg-light">
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{% url 'dashboard_lesson_create' chapter.id %}" class="btn btn-sm btn-outline-primary">
+                        <i class="fa-solid fa-plus"></i> 新增單元
+                    </a>
+                </div>
+
+                {% if chapter.lessons.all %}
+                <ul class="list-group">
+                    {% for lesson in chapter.lessons.all|dictsort:"order" %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-light text-dark border me-2">{{ lesson.order }}</span>
+                            {{ lesson.title }}
+                            {% if lesson.is_preview %}
+                            <span class="badge bg-info text-dark ms-2">試看</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if lesson.video_url %}
+                            <a href="{{ lesson.video_url }}" target="_blank"
+                                class="text-decoration-none text-muted small me-3">
+                                <i class="fa-brands fa-youtube"></i> 影片連結
+                            </a>
+                            {% else %}
+                            <span class="text-danger small me-3"><i class="fa-solid fa-triangle-exclamation"></i>
+                                無影片</span>
+                            {% endif %}
+                            <!-- Future: Edit Lesson Button -->
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-center text-muted my-3">本章節尚未新增單元</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-5 text-muted bg-white rounded shadow-sm">
+        <p class="mb-3">目前還沒有任何章節</p>
+        <a href="{% url 'dashboard_chapter_create' course.slug %}" class="btn btn-primary">
+            立即新增第一章
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

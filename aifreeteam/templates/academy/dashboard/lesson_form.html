@@ -1,0 +1,55 @@
+{% extends 'academy/dashboard/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-white py-3">
+                <h4 class="mb-0">新增單元</h4>
+                <div class="small text-muted mt-1">
+                    課程：{{ course.title }} <i class="fa-solid fa-chevron-right mx-1"></i>
+                    章節：{{ chapter.title }}
+                </div>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                        {{ form.title.errors }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.video_url.label_tag }}
+                        {{ form.video_url }}
+                        <div class="form-text">請輸入 YouTube 或其他影片連結</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                {{ form.order.label_tag }}
+                                {{ form.order }}
+                            </div>
+                        </div>
+                        <div class="col-6 d-flex align-items-center">
+                            <div class="form-check form-switch mt-3">
+                                {{ form.is_preview }}
+                                <label class="form-check-label" for="{{ form.is_preview.id_for_label }}">設為試看單元</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">新增單元</button>
+                        <a href="{% url 'dashboard_course_manage' course.slug %}"
+                            class="btn btn-outline-secondary">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

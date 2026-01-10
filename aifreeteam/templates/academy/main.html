@@ -1,0 +1,170 @@
+<!DOCTYPE html>{% load static %}
+<html lang="zh-Hant">
+{% include 'academy/default/head.html' %}
+<body class="page-container">
+  <!-- Navbar -->
+  {% include 'academy/default/navbar.html' %}
+
+  <!-- Hero -->
+  <header class="hero d-flex align-items-center text-white text-center">
+    <div class="container">
+      <h1 class="fw-bold mb-3">自由學院 (AI . FREE Academy)</h1>
+      <p class="lead mb-4">解鎖未來職涯，專家陪你成長</p>
+      <a href="/academy/search" class="btn btn-lg btn-primary px-4 me-2">查找課程</a>
+      <!-- <a href="#" class="btn btn-lg btn-outline-light px-4">我是講師</a> -->
+    </div>
+  </header>
+
+  <!-- Popular Courses -->
+  <section id="courses" class="py-5">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-5">熱門課程</h2>
+      <div class="row g-4">
+        {% for course in top_courses %}
+        <!-- Course Card -->
+        <div class="col-md-6 col-lg-4">
+          <a href="/academy/course/{{ course.slug }}" class="text-decoration-none"><div class="card course-card h-100">
+            <img src='{{ course.img_link }}' class="card-img-top" alt="Python" />
+            <div class="card-body">
+              <h5 class="card-title">{{ course.title }}</h5>
+              <p class="card-text text-truncate">{{ course.subtitle }}</p>
+              <p class="text-end mb-0 small text-muted">講師：{{ course.instructor }}</p>
+            </div>
+            <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+              <span class="fw-bold text-primary">NT$ {{ course.price }}</span>
+              <span class="text-muted small"><i class="fa-solid fa-users me-1"></i>{{ course.enroll_count }}</span>
+            </div>
+          </div></a>
+        </div>
+        {% endfor %}
+        <!-- Card 2 -->
+        <!-- <div class="col-md-6 col-lg-4">
+          <a href="/academy/course/" class="text-decoration-none"><div class="card course-card h-100">
+            <img src='/static/academy/img/hero.png' class="card-img-top" alt="UX/UI" />
+            <div class="card-body">
+              <h5 class="card-title">UX/UI 設計全攻略</h5>
+              <p class="card-text text-truncate">從研究到雛形，高效打造用戶體驗佳的產品</p>
+              <p class="text-end mb-0 small text-muted">講師：Ken</p>
+            </div>
+            <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+              <span class="fw-bold text-primary">NT$ 2,480</span>
+              <span class="text-muted small"><i class="fa-solid fa-users me-1"></i>980</span>
+            </div>
+          </div></a>
+        </div> -->
+        <!-- Card 3 -->
+        <!-- <div class="col-md-6 col-lg-4">
+          <a href="/academy/course/" class="text-decoration-none"><div class="card course-card h-100">
+            <img src="/static/academy/img/hero.png" class="card-img-top" alt="Marketing" />
+            <div class="card-body">
+              <h5 class="card-title mb-2">數位行銷成長黑客</h5>
+              <p class="card-text text-truncate">用前沿策略與工具，快速提高品牌曝光率</p>
+              <p class="text-end mb-0 small text-muted">講師：Ken</p>
+            </div>
+            <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+              <span class="fw-bold text-primary">NT$ 1,680</span>
+              <span class="text-muted small">
+                <i class="fa-solid fa-users me-1"></i>1,570
+              </span>
+            </div>
+          </div></a>
+        </div> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="categories" class="bg-light py-5">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-5">課程類別</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-md-4 col-lg-2 text-center">
+          <a href="/academy/search/?category=code" class="text-decoration-none">
+            <div class="category-icon"><i class="fa-solid fa-code"></i></div><p class="mb-0">軟體開發</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 text-center">
+          <a href="/academy/search/?category=data_analytics" class="text-decoration-none">
+            <div class="category-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div><p class="mb-0">數據分析</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 text-center">
+          <a href="/academy/search/?category=date_science" class="text-decoration-none">
+            <div class="category-icon"><i class="fa-solid fa-flask"></i></div><p class="mb-0">資料科學</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 text-center">
+          <a href="/academy/search/?category=deeplearning" class="text-decoration-none">
+            <div class="category-icon"><i class="fa-solid fa-atom"></i></div><p class="mb-0">深度學習</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 text-center">
+          <a href="/academy/search/?category=llm" class="text-decoration-none">
+            <div class="category-icon"><i class="fa-solid fa-comments"></i></div><p class="mb-0">LLM 開發</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 text-center">
+          <a href="/academy/search/?category=ai_drawing" class="text-decoration-none">
+            <div class="category-icon"><i class="fa-solid fa-palette"></i></div><p class="mb-0">AI 繪圖</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <!-- <section id="testimonials" class="py-5">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-5">學員好評</h2>
+      <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="text-center p-4 border rounded-3 shadow-sm">
+                  <blockquote class="blockquote mb-4"><p>在自由學院學 Python，三個月就成功轉職！</p></blockquote>
+                  <footer class="blockquote-footer">小明 · 軟體工程師</footer>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="text-center p-4 border rounded-3 shadow-sm">
+                  <blockquote class="blockquote mb-4"><p>平台介面友善，講師實戰經驗豐富，真心推薦！</p></blockquote>
+                  <footer class="blockquote-footer">小雨 · 行銷經理</footer>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="text-center p-4 border rounded-3 shadow-sm">
+                  <blockquote class="blockquote mb-4"><p>多元課程讓我兼職也能持續進修 UI/UX！</p></blockquote>
+                  <footer class="blockquote-footer">小潔 · UX 設計師</footer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Footer -->
+  {% include 'academy/default/footer.html' %}
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

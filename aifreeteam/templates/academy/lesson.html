@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+{% include 'academy/default/head.html' %}
+<body class="page-container">
+  <!-- Navbar -->
+  {% include 'academy/default/navbar.html' %}
+
+<!-- Main Section -->
+<section class="container py-4">
+  <div class="container">
+    <div class="row gx-5">
+      <!-- Left: Video Player -->
+      <div class="col-lg-8">
+        <div class="mb-3">
+          <div class="course-title">{{ course.title }}</div>
+          <div class="unit-title">正在播放：{{ lesson.chapter.title }}</div>
+        </div>
+        <div class="video-wrapper shadow-sm mb-4">
+          <iframe
+            width="100%" height="400"
+            src="{{ lesson.video_url }}"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="d-flex justify-content-between">
+          {% if progress == 1%}
+          <i> </i>
+          {% else %}
+          <a href="/academy/course/{{course.slug}}/{{progress|add:'-1'}}" class="btn btn-outline-secondary"><i class="fa-solid fa-arrow-left me-2"></i>上一章</a>
+          {% endif %}
+          {% if progress >= num_progress %}
+          <a href="/academy/course/{{course.slug}}/{{progress}}/complete_all/" class="btn btn-primary">課程完成</a>
+          {% else %}
+          <a href="/academy/course/{{course.slug}}/{{progress|add:'1'}}/complete/" class="btn btn-primary">下一章<i class="fa-solid fa-arrow-right ms-2"></i></a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Right: Progress List -->
+      <div class="col-lg-4">
+        <a href="/academy/course/{{course.slug}}" class="btn btn-outline-primary w-100 mb-4">
+          <i class="fa-solid fa-arrow-left me-2"></i>返回課程主頁
+        </a>
+      
+        <h5 class="fw-bold mb-3">課程章節進度</h5>
+        <div class="accordion" id="courseAccordion">
+          {% for chapter in course.chapters.all %}
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ chapter.order }}">{{ chapter.title }}</button>
+            </h2>
+            <div id="{{ chapter.order }}" class="accordion-collapse {% if lesson.chapter.title == chapter.title %}collapsed{% else %}collapse{% endif %}" data-bs-parent="#courseAccordion">
+              {% for lesson in chapter.lessons.all %}
+              <a href="/academy/course/{{ course.slug }}/{{ lesson.order }}"><div class="accordion-body d-flex justify-content-between align-items-center">
+                <span>{{ lesson.title }}</span>
+                {% if user_progress > lesson.order %}
+                <span class="badge badge-complete text-white">已完成</span>
+                {% else %}
+                <span class="badge bg-secondary">未完成</span>
+                {% endif %}
+              </div></a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+
+        <!-- <ul class="list-group list-group-flush">
+          {% for chapter in course.chapters.all %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ chapter.title }}
+          </li>
+          {% for lesson in chapter.lessons.all %}
+          <font>{{ lesson.title }}<span class="badge badge-complete text-white justify-content-between">已完成</span></font>
+          {% endfor %}
+          {% endfor %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            第 2 單元：變數與資料型態
+            <span class="badge bg-secondary">未完成</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            第 3 單元：流程控制與迴圈
+            <span class="badge bg-secondary">未完成</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            第 4 單元：函式與模組
+            <span class="badge bg-secondary">未完成</span>
+          </li>
+        </ul> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 text-center bg-dark text-white">
+  <div class="container">
+    <p class="mb-1">© 2025 自由學院 AI . FREE Academy</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+{% include 'academy/default/head.html' %}
+<body class="page-container">
+  <!-- Navbar -->
+  {% include 'academy/default/navbar.html' %}
+
+<!-- Navbar 可共用 partial -->
+
+<div class="container py-5">
+  <h2 class="mb-4 fw-bold border-start ps-3 border-4 border-success">📚 我的課程</h2>
+
+  {% if course_progress_data %}
+    <div class="row g-4">
+      {% for enroll in course_progress_data %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card course-card h-100 shadow-sm">
+            <img src="{{ enroll.course.img_link }}" class="card-img-top" alt="{{ enroll.course.title }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ enroll.course.title }}</h5>
+              <p class="card-text text-muted">{{ enroll.course.subtitle }}</p>
+            </div>
+            <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+              <small class="text-muted">進度：{{ enroll.progress }}%</small>
+              <a href="/academy/course/{{ enroll.course.slug }}" class="btn btn-sm btn-outline-primary">繼續上課</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      
+    </div>
+  {% else %}
+    <div class="alert alert-secondary">
+      你尚未報名任何課程，<a href="/academy/search" class="alert-link">立即探索課程</a> 吧！
+    </div>
+  {% endif %}
+</div>
+{% include 'academy/default/footer.html' %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

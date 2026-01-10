@@ -1,0 +1,61 @@
+{% extends 'academy/dashboard/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>課程列表</h2>
+    <a href="{% url 'dashboard_course_create' %}" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> 建立新課程
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4">課程名稱</th>
+                    <th>講師</th>
+                    <th>價格</th>
+                    <th>狀態</th>
+                    <th>建立時間</th>
+                    <th class="text-end pe-4">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td class="ps-4">
+                        <div class="fw-bold">{{ course.title }}</div>
+                        <div class="small text-muted">{{ course.slug }}</div>
+                    </td>
+                    <td>{{ course.instructor }}</td>
+                    <td>NT$ {{ course.price }}</td>
+                    <td>
+                        {% if course.is_published %}
+                        <span class="badge bg-success">已發布</span>
+                        {% else %}
+                        <span class="badge bg-secondary">草稿</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ course.created_at|date:"Y/m/d" }}</td>
+                    <td class="text-end pe-4">
+                        <a href="{% url 'dashboard_course_manage' course.slug %}"
+                            class="btn btn-sm btn-outline-primary me-1">
+                            <i class="fa-solid fa-list-check"></i> 管理內容
+                        </a>
+                        <a href="{% url 'dashboard_course_edit' course.slug %}"
+                            class="btn btn-sm btn-outline-secondary">
+                            <i class="fa-solid fa-pen"></i> 編輯資訊
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-5 text-muted">目前沒有任何課程</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

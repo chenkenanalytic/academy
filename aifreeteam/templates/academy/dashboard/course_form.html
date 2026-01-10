@@ -1,0 +1,104 @@
+{% extends 'academy/dashboard/base.html' %}
+
+{% block extra_head %}
+{{ form.media }}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        {% if course %}編輯課程：{{ course.title }}{% else %}建立新課程{% endif %}
+    </h2>
+    <a href="{% url 'dashboard_home' %}" class="btn btn-outline-secondary">
+        <i class="fa-solid fa-arrow-left"></i> 返回列表
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                        {{ form.title.errors }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form.slug.label_tag }}
+                        {{ form.slug }}
+                        {{ form.slug.errors }}
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        {{ form.subtitle.label_tag }}
+                        {{ form.subtitle }}
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.instructor.label_tag }}
+                        {{ form.instructor }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.img_link.label_tag }}
+                        {{ form.img_link }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form.price.label_tag }}
+                        {{ form.price }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form.duration_hours.label_tag }}
+                        {{ form.duration_hours }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form.level.label_tag }}
+                        {{ form.level }}
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-check form-switch">
+                        {{ form.is_published }}
+                        <label class="form-check-label" for="{{ form.is_published.id_for_label }}">是否發布 (公開顯示)</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        {{ form.certificate_available }}
+                        <label class="form-check-label"
+                            for="{{ form.certificate_available.id_for_label }}">提供完課證書</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">儲存課程</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
