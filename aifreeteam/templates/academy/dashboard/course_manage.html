@@ -23,9 +23,24 @@
             <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button"
                 data-bs-toggle="collapse" data-bs-target="#collapse{{ chapter.id }}" aria-expanded="true"
                 aria-controls="collapse{{ chapter.id }}">
-                <span class="fw-bold me-3">第 {{ chapter.order }} 章：{{ chapter.title }}</span>
-                <span class="badge bg-secondary rounded-pill">{{ chapter.lessons.count }} 單元</span>
+                <span class="fw-bold me-auto">第 {{ chapter.order }} 章：{{ chapter.title }}</span>
+                <span class="badge bg-secondary rounded-pill me-3">{{ chapter.lessons.count }} 單元</span>
             </button>
+            <div class="dropdown position-absolute" style="right: 60px; top: 15px; z-index: 10;">
+                <button class="btn btn-sm btn-link text-dark" type="button" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'dashboard_chapter_edit' chapter.id %}"><i
+                                class="fa-solid fa-pen me-2"></i>編輯章節</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger delete-chapter"
+                            href="{% url 'dashboard_chapter_delete' chapter.id %}"><i
+                                class="fa-solid fa-trash me-2"></i>刪除章節</a></li>
+                </ul>
+            </div>
         </h2>
         <div id="collapse{{ chapter.id }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
             aria-labelledby="heading{{ chapter.id }}" data-bs-parent="#chaptersAccordion">
@@ -57,7 +72,13 @@
                             <span class="text-danger small me-3"><i class="fa-solid fa-triangle-exclamation"></i>
                                 無影片</span>
                             {% endif %}
-                            <!-- Future: Edit Lesson Button -->
+                            <a href="{% url 'dashboard_lesson_edit' lesson.id %}" class="text-primary small ms-2">
+                                <i class="fa-solid fa-pen"></i> 編輯
+                            </a>
+                            <a href="{% url 'dashboard_lesson_delete' lesson.id %}"
+                                class="text-danger small ms-2 delete-lesson">
+                                <i class="fa-solid fa-trash"></i> 刪除
+                            </a>
                         </div>
                     </li>
                     {% endfor %}
@@ -77,4 +98,52 @@
     </div>
     {% endfor %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Delete Lesson Confirmation
+        document.querySelectorAll('.delete-lesson').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                Swal.fire({
+                    title: '確定要刪除這個單元嗎？',
+                    text: "刪除後將無法恢復！",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: '確定刪除',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+
+        // Delete Chapter Confirmation
+        document.querySelectorAll('.delete-chapter').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                Swal.fire({
+                    title: '確定要刪除整個章節嗎？',
+                    text: "這將會連同該章節下的所有單元一起刪除，且無法恢復！",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: '確定刪除',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}

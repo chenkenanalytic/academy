@@ -20,6 +20,29 @@
             {% csrf_token %}
 
             <div class="row g-3">
+                <div class="col-12">
+                    <div class="mb-3 p-3 bg-light rounded border">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="fw-bold m-0">{{ form.cate.label }}</label>
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                data-bs-target="#addCategoryModal">
+                                <i class="fa-solid fa-plus"></i> 快速新增主題
+                            </button>
+                        </div>
+                        <div class="d-flex flex-wrap gap-3" id="category-checkboxes">
+                            {% for checkbox in form.cate %}
+                            <div class="form-check">
+                                {{ checkbox.tag }}
+                                <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                                    {{ checkbox.choice_label }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {{ form.cate.errors }}
+                    </div>
+                </div>
+
                 <div class="col-md-8">
                     <div class="mb-3">
                         {{ form.title.label_tag }}
@@ -101,4 +124,90 @@
         </form>
     </div>
 </div>
+
+<!-- Quick Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">快速新增主題</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">主題名稱</label>
+                    <input type="text" id="newCatName" class="form-control" placeholder="例如：AI 繪圖實戰">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">網址代稱 (Slug)</label>
+                    <input type="text" id="newCatSlug" class="form-control" placeholder="例如：ai-art">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" id="btnSaveCategory" class="btn btn-primary">儲存並取用</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('btnSaveCategory').addEventListener('click', function () {
+        const name = document.getElementById('newCatName').value;
+        const slug = document.getElementById('newCatSlug').value;
+
+        if (!name || !slug) {
+            Swal.fire('錯誤', '名稱與網址代稱不可為空', 'error');
+            return;
+        }
+
+        fetch('{% url "api_category_create" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ name: name, slug: slug })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Add new checkbox to the list
+                    const container = document.getElementById('category-checkboxes');
+                    const div = document.createElement('div');
+                    div.className = 'form-check';
+
+                    // Construct the checkbox HTML manually to match Django output
+                    const checkboxId = 'id_cate_' + (container.children.length + 100); // Random high index to avoid collision
+                    div.innerHTML = `
+                    <input type="checkbox" name="cate" value="${data.id}" class="form-check-input" id="${checkboxId}" checked>
+                    <label class="form-check-label" for="${checkboxId}">
+                        ${data.name}
+                    </label>
+                `;
+                    container.appendChild(div);
+
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addCategoryModal'));
+                    modal.hide();
+
+                    // Clear fields
+                    document.getElementById('newCatName').value = '';
+                    document.getElementById('newCatSlug').value = '';
+
+                    // Show success
+                    Toast.fire({
+                        icon: 'success',
+                        title: '主題新增成功'
+                    });
+                } else {
+                    Swal.fire('錯誤', data.error || '新增失敗', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('錯誤', '網路請求失敗', 'error');
+            });
+    });
+</script>
 {% endblock %}

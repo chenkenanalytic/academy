@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-c3)*%2y8f6(vgi6q_$ds0yv$br)twix&_$i(9c$%a)u!@d2efh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://aifree-academy.zeabur.app']
+CSRF_TRUSTED_ORIGINS = ['https://aifreeteam-app.zeabur.app']
 
 # ALLOWED_HOSTS = ['aifreeteam.com', 'www.aifreeteam.com']
 # CSRF_TRUSTED_ORIGINS = ['https://aifreeteam.com', 'https://www.aifreeteam.com']

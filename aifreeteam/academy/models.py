@@ -21,7 +21,7 @@ class Course(models.Model):
     slug = models.CharField('課程網址', max_length=256, db_index=True, unique=True)
     img_link = models.CharField('課程圖片連結', max_length=2560, default="/static/academy/img/hero.png")
     instructor = models.CharField(max_length=50)
-    duration_hours = models.PositiveIntegerField()
+    duration_hours = models.FloatField()
     level = models.CharField(max_length=20, choices=[
         ('beginner', '初學者'),
         ('intermediate', '中階'),
@@ -64,6 +64,21 @@ class Lesson(models.Model):
 
     def __str__(self):
         return f"{self.chapter.title} - {self.title}"
+
+    @property
+    def video_embed_url(self):
+        if not self.video_url:
+            return ""
+        if "youtube.com" in self.video_url or "youtu.be" in self.video_url:
+            # Handle standard YouTube URLs
+            import re
+            # Regex to extract video ID from various YouTube URL formats
+            regex = r"(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^\"&?\/\s]{11})"
+            match = re.search(regex, self.video_url)
+            if match:
+                video_id = match.group(1)
+                return f"https://www.youtube.com/embed/{video_id}"
+        return self.video_url # Return original if not matched or other source
 
 # ✅ 學員是否購買此課程
 class CourseEnrollment(models.Model):

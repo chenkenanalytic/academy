@@ -35,6 +35,7 @@
             padding: 20px;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% block extra_head %}{% endblock %}
 </head>
 
@@ -56,9 +57,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/academy/dashboard/course/create/"
-                        class="nav-link {% if 'create' in request.path %}active{% endif %}">
+                    <a href="{% url 'dashboard_course_create' %}"
+                        class="nav-link {% if 'course/create' in request.path %}active{% endif %}">
                         <i class="fa-solid fa-plus me-2"></i> 建立新課程
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard_category_list' %}"
+                        class="nav-link {% if 'category' in request.path %}active{% endif %}">
+                        <i class="fa-solid fa-tags me-2"></i> 主題管理
                     </a>
                 </li>
                 <li>
@@ -75,20 +82,57 @@
                     <strong>{{ request.user.username }}</strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="/academy/logout">登出</a></li>
+                    <li><a class="dropdown-item logout-link" href="{% url 'academy_logout' %}">登出</a></li>
                 </ul>
             </div>
         </div>
 
+        <script>
+            // Logout Confirmation for Dashboard
+            document.querySelectorAll('.logout-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('href');
+                    Swal.fire({
+                        title: '確定要登出嗎？',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3fb0e6',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: '確定',
+                        cancelButtonText: '取消'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            });
+        </script>
+
         <!-- Main Content -->
         <div class="flex-grow-1 main-content">
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            {% endfor %}
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+
+                {% for msg in messages %}
+                Toast.fire({
+                    icon: '{{ msg.tags|default:"info" }}',
+                    title: '{{ msg }}'
+                });
+                {% endfor %}
+            </script>
             {% endif %}
 
             {% block content %}{% endblock %}

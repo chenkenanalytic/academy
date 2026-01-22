@@ -1,0 +1,23 @@
+<!DOCTYPE html>{% load static %}
+<html lang="zh-Hant">
+{% include 'academy/default/head.html' %}
+
+<body class="page-container">
+    <!-- Navbar -->
+    {% include 'academy/default/navbar.html' %}
+
+    {% block hero %}{% endblock %}
+
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'academy/default/footer.html' %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_script %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+{% extends 'academy/base_public.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bg-light py-5">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Progress Stepper -->
+                <div class="d-flex justify-content-between mb-5 px-5">
+                    <div class="text-center">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mb-2 mx-auto"
+                            style="width: 40px; height: 40px;">1</div>
+                        <small class="fw-bold">確認訂單</small>
+                    </div>
+                    <div class="flex-grow-1 border-top mt-3 mx-2 opacity-25"></div>
+                    <div class="text-center opacity-50">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2 mx-auto"
+                            style="width: 40px; height: 40px;">2</div>
+                        <small>完成支付</small>
+                    </div>
+                    <div class="flex-grow-1 border-top mt-3 mx-2 opacity-25"></div>
+                    <div class="text-center opacity-50">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2 mx-auto"
+                            style="width: 40px; height: 40px;">3</div>
+                        <small>開始學習</small>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 20px;">
+                    <div class="row g-0">
+                        <div class="col-md-5">
+                            <img src="{{ course.img_link }}" class="img-fluid h-100 object-fit-cover"
+                                alt="{{ course.title }}" style="min-height: 300px;">
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body p-4 p-lg-5">
+                                <div class="mb-4">
+                                    <span
+                                        class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill mb-2">訂單明細</span>
+                                    <h2 class="card-title fw-bold mb-1">{{ course.title }}</h2>
+                                    <p class="text-muted small">講師：{{ course.instructor }}</p>
+                                </div>
+
+                                <div class="bg-light rounded-3 p-3 mb-4 border border-dashed">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">課程售價</span>
+                                        <span class="fw-bold">NT$ {{ course.price }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">活動折抵</span>
+                                        <span class="text-success fw-bold text-decoration-line-through"> - NT$ 0</span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold h5 mb-0">應付總額</span>
+                                        <span class="fw-bold h4 mb-0 text-primary">NT$ {{ course.price }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold small text-uppercase">支付方式 (模擬測試中)</label>
+                                    <div class="d-flex gap-3">
+                                        <div
+                                            class="form-check card-select flex-grow-1 border rounded-3 p-3 active border-primary">
+                                            <input class="form-check-input" type="radio" name="paymentMethod"
+                                                id="creditCard" checked>
+                                            <label class="form-check-label d-flex align-items-center" for="creditCard">
+                                                <i class="fa-regular fa-credit-card me-2 text-primary"></i> 信用卡支付
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <form action="{% url 'academy_course_payment_confirm' course.slug %}" method="POST"
+                                    id="paymentForm">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow"
+                                        style="border-radius: 12px; font-size: 1.1rem;">
+                                        立即支付 <i class="fa-solid fa-lock ms-2 small"></i>
+                                    </button>
+                                </form>
+
+                                <div class="text-center mt-3">
+                                    <p class="text-muted small mb-0">
+                                        <i class="fa-solid fa-shield-halved me-1"></i> SSL 安全加密，暫無金流串接
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{% url 'academy_course' course.slug %}" class="text-decoration-none text-muted small">
+                        <i class="fa-solid fa-chevron-left me-1"></i> 返回課程詳情
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const form = this;
+
+        Swal.fire({
+            title: '處理支付中...',
+            text: '正在與模擬銀行端核對資料，請稍候',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+            },
+            willClose: () => {
+                form.submit();
+            }
+        });
+    });
+</script>
+
+<style>
+    .card-select {
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .card-select:hover {
+        background-color: #f8f9fa;
+    }
+
+    .border-dashed {
+        border-style: dashed !important;
+    }
+</style>
+{% endblock %}

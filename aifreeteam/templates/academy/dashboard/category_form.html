@@ -1,0 +1,50 @@
+{% extends 'academy/dashboard/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        {% if category %}編輯主題：{{ category.name }}{% else %}建立新主題{% endif %}
+    </h2>
+    <a href="{% url 'dashboard_category_list' %}" class="btn btn-outline-secondary">
+        <i class="fa-solid fa-arrow-left"></i> 返回列表
+    </a>
+</div>
+
+<div class="card shadow-sm" style="max-width: 800px;">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.slug.label_tag }}
+                {{ form.slug }}
+                <div class="form-text">主題的網址路徑，例如：<code>ai-fundamentals</code></div>
+                {{ form.slug.errors }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.intro.label_tag }}
+                {{ form.intro }}
+            </div>
+
+            <div class="mb-4">
+                <div class="form-check form-switch">
+                    {{ form.display }}
+                    <label class="form-check-label" for="{{ form.display.id_for_label }}">是否在首頁/列表顯示此主題</label>
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary px-4">儲存主題</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

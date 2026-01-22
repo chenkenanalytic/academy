@@ -9,37 +9,101 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link rel="shortcut icon" type="image/x-icon" href="/static/bootstrap/assets/img/favicon.ico">
   <!-- Google Fonts（台灣思源黑體）-->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+    rel="stylesheet" />
 
   <style>
     :root {
-      --primary-color: #3fb0e6;          /* rgb(63,176,230) */
-      --accent-color : #8dcd49;          /* rgb(141,205,73) */
+      --primary-color: #3fb0e6;
+      /* rgb(63,176,230) */
+      --accent-color: #8dcd49;
+      /* rgb(141,205,73) */
     }
-    body { font-family: 'Noto Sans TC', sans-serif; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
 
     /* ---------- Navbar ---------- */
-    .navbar-brand { color: var(--primary-color) !important; font-weight: 800; }
-    .navbar-nav .nav-link.active { color: var(--primary-color) !important; }
+    .navbar-brand {
+      color: var(--primary-color) !important;
+      font-weight: 800;
+    }
+
+    .navbar-nav .nav-link.active {
+      color: var(--primary-color) !important;
+    }
 
     /* ---------- Hero ---------- */
     .hero {
-      background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
-                  url('/static/academy/img/hero.png') center/cover no-repeat;
-      min-height: 70vh;
+      background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .7)),
+        url('/static/academy/img/ai_landing_hero.png') center/cover no-repeat;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .hero h1 { font-size: 3rem; }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      letter-spacing: -1px;
+    }
+
+    /* ---------- Intro Section ---------- */
+    .intro-section {
+      padding: 100px 0;
+      background: #fff;
+    }
+
+    .feature-card {
+      border: none;
+      border-radius: 1.5rem;
+      background: #fdfdfd;
+      transition: all 0.3s ease;
+      padding: 2.5rem;
+      height: 100%;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: rgba(63, 176, 230, 0.1);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
 
     /* ---------- Cards ---------- */
-    .course-card { transition: transform .3s, box-shadow .3s; }
-    .course-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(0,0,0,.15); }
+    .course-card {
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .15);
+    }
 
     /* ---------- Category icon ---------- */
     .category-icon {
-      width:64px; height:64px; border-radius:50%;
-      display:flex; align-items:center; justify-content:center;
-      background: var(--accent-color); color:#fff; font-size:1.5rem;
-      margin:0 auto .5rem;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-color);
+      color: #fff;
+      font-size: 1.5rem;
+      margin: 0 auto .5rem;
     }
 
     /* ---------- Brand Buttons ---------- */
@@ -53,21 +117,35 @@
     }
 
     /* ---------- Footer ---------- */
-    footer { background:#212529; color:#adb5bd; }
-    footer a { color:#adb5bd; text-decoration:none; }
-    footer a:hover { color:#fff; }
+    footer {
+      background: #212529;
+      color: #adb5bd;
+    }
+
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
   </style>
   <style>
     :root {
       --primary-color: #3fb0e6;
       --accent-color: #8dcd49;
     }
-    body { font-family: 'Noto Sans TC', sans-serif; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
 
     .navbar-brand {
       color: var(--primary-color) !important;
       font-weight: 800;
     }
+
     .nav-link.active {
       color: var(--primary-color) !important;
     }
@@ -75,9 +153,10 @@
     .course-card {
       transition: transform .3s, box-shadow .3s;
     }
+
     .course-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0,0,0,.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .1);
     }
 
     .btn-primary {
@@ -106,10 +185,12 @@
       background-color: #212529 !important;
       color: #adb5bd;
     }
+
     footer a {
       color: #adb5bd;
       text-decoration: none;
     }
+
     footer a:hover {
       color: #fff;
     }
@@ -124,46 +205,74 @@
   <style>
     :root {
       --primary-color: #3fb0e6;
-      --accent-color : #8dcd49;
+      --accent-color: #8dcd49;
     }
-    body { font-family: 'Noto Sans TC', sans-serif; min-height:100vh }
-    .navbar-brand { color: var(--primary-color) !important; font-weight: 800; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      min-height: 100vh
+    }
+
+    .navbar-brand {
+      color: var(--primary-color) !important;
+      font-weight: 800;
+    }
+
     .btn-primary {
       --bs-btn-bg: var(--primary-color);
       --bs-btn-border-color: var(--primary-color);
       --bs-btn-hover-bg: #36a3d3;
     }
+
     .section-title {
       border-left: 5px solid var(--accent-color);
       padding-left: .75rem;
       font-weight: 700;
       margin-bottom: 1.5rem;
     }
+
     .hero-img {
       max-height: 480px;
       object-fit: cover;
       width: 100%;
       border-radius: .5rem;
     }
+
     footer {
       background: #212529;
       color: #adb5bd;
     }
-    footer a { color: #adb5bd; text-decoration: none; }
-    footer a:hover { color: #fff; }
+
+    footer a {
+      color: #adb5bd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
   </style>
 
   <style>
     :root {
       --primary-color: #3fb0e6;
-      --accent-color : #8dcd49;
+      --accent-color: #8dcd49;
     }
-    body { font-family: 'Noto Sans TC', sans-serif; }
-    .navbar-brand { color: var(--primary-color) !important; font-weight: 800; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .navbar-brand {
+      color: var(--primary-color) !important;
+      font-weight: 800;
+    }
+
     .btn-primary {
       --bs-btn-bg: var(--primary-color);
       --bs-btn-border-color: var(--primary-color);
     }
+
     .video-wrapper {
       position: relative;
       padding-bottom: 56.25%;
@@ -171,39 +280,65 @@
       overflow: hidden;
       border-radius: .5rem;
     }
+
     .video-wrapper iframe {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
     }
+
     .course-title {
       font-size: 1.75rem;
       font-weight: 700;
       color: var(--primary-color);
     }
+
     .unit-title {
       font-size: 1.125rem;
       font-weight: 600;
       color: #444;
     }
+
     .badge-complete {
       background-color: var(--accent-color);
     }
-    .page-container { /* 這個是你的最外層容器，這裡用 body 作為範例 */
+
+    .page-container {
+      /* 這個是你的最外層容器，這裡用 body 作為範例 */
       display: flex;
-      flex-direction: column; /* 將子元素垂直堆疊 */
-      min-height: 100vh; /* 確保容器至少佔滿整個視窗高度 */
+      flex-direction: column;
+      /* 將子元素垂直堆疊 */
+      min-height: 100vh;
+      /* 確保容器至少佔滿整個視窗高度 */
     }
+
     .container {
       flex-grow: 1;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   {% if messages %}
-    <script>
-      {% for msg in messages %}
-      alert('{{ msg }}');
-      {% endfor %}
-    </script>
-    {% endif %}
+  <script>
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    });
+
+    {% for msg in messages %}
+    Toast.fire({
+      icon: '{{ msg.tags|default:"info" }}',
+      title: '{{ msg }}'
+    });
+    {% endfor %}
+  </script>
+  {% endif %}
 </head>

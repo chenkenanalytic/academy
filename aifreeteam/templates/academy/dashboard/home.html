@@ -3,9 +3,14 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>課程列表</h2>
-    <a href="{% url 'dashboard_course_create' %}" class="btn btn-primary">
-        <i class="fa-solid fa-plus"></i> 建立新課程
-    </a>
+    <div class="d-flex gap-2">
+        <a href="{% url 'dashboard_course_export' %}" class="btn btn-outline-success">
+            <i class="fa-solid fa-file-excel"></i> 匯出課程資料
+        </a>
+        <a href="{% url 'dashboard_course_create' %}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> 建立新課程
+        </a>
+    </div>
 </div>
 
 <div class="card shadow-sm">
@@ -17,7 +22,6 @@
                     <th>講師</th>
                     <th>價格</th>
                     <th>狀態</th>
-                    <th>建立時間</th>
                     <th class="text-end pe-4">操作</th>
                 </tr>
             </thead>
@@ -37,7 +41,6 @@
                         <span class="badge bg-secondary">草稿</span>
                         {% endif %}
                     </td>
-                    <td>{{ course.created_at|date:"Y/m/d" }}</td>
                     <td class="text-end pe-4">
                         <a href="{% url 'dashboard_course_manage' course.slug %}"
                             class="btn btn-sm btn-outline-primary me-1">
@@ -45,13 +48,13 @@
                         </a>
                         <a href="{% url 'dashboard_course_edit' course.slug %}"
                             class="btn btn-sm btn-outline-secondary">
-                            <i class="fa-solid fa-pen"></i> 編輯資訊
+                            <i class="fa-solid fa-pen"></i> 編輯
                         </a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6" class="text-center py-5 text-muted">目前沒有任何課程</td>
+                    <td colspan="5" class="text-center py-5 text-muted">目前沒有任何課程</td>
                 </tr>
                 {% endfor %}
             </tbody>

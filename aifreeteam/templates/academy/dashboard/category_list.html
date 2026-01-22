@@ -1,0 +1,82 @@
+{% extends 'academy/dashboard/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>主題主題管理</h2>
+    <a href="{% url 'dashboard_category_create' %}" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> 建立新主題
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4">主題名稱</th>
+                    <th>網址代稱 (Slug)</th>
+                    <th>顯示狀態</th>
+                    <th class="text-end pe-4">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td class="ps-4">
+                        <div class="fw-bold">{{ category.name }}</div>
+                        <div class="small text-muted text-truncate" style="max-width: 300px;">{{ category.intro }}</div>
+                    </td>
+                    <td><code>{{ category.slug }}</code></td>
+                    <td>
+                        {% if category.display %}
+                        <span class="badge bg-success">顯示中</span>
+                        {% else %}
+                        <span class="badge bg-secondary">已隱藏</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end pe-4">
+                        <a href="{% url 'dashboard_category_edit' category.id %}"
+                            class="btn btn-sm btn-outline-secondary">
+                            <i class="fa-solid fa-pen"></i> 編輯
+                        </a>
+                        <a href="{% url 'dashboard_category_delete' category.id %}"
+                            class="btn btn-sm btn-outline-danger delete-category">
+                            <i class="fa-solid fa-trash"></i> 刪除
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-5 text-muted">目前沒有任何主題</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-category').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                Swal.fire({
+                    title: '確定要刪除這個主題嗎？',
+                    text: "這可能會影響到歸屬此主題的課程顯示！",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: '確定刪除',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
